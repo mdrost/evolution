@@ -6,7 +6,6 @@
 #include <cmath>
 #include <iostream>
 #include <iomanip>
-#include <algorithm>
 #include <cstddef>
 
 GridWorld::GridWorld()
@@ -462,27 +461,9 @@ void GridWorld::draw() const
 {
 	quadAttributes.clear();
 
-	plantEnergies.clear();
-	plantReproductionEnergies.clear();
-	plantOffspringEnergies.clear();
-	plantGeneDecrementFactors.clear();
-	plantGeneStabilizeFactors.clear();
-	plantGeneIncrementFactors.clear();
-
-	herbivoreEnergies.clear();
-	herbivoreReproductionEnergies.clear();
-	herbivoreOffspringEnergies.clear();
-	herbivoreGeneDecrementFactors.clear();
-	herbivoreGeneStabilizeFactors.clear();
-	herbivoreGeneIncrementFactors.clear();
-	herbivoreFeastSizes.clear();
-
-	carnivoreEnergies.clear();
-	carnivoreReproductionEnergies.clear();
-	carnivoreOffspringEnergies.clear();
-	carnivoreGeneDecrementFactors.clear();
-	carnivoreGeneStabilizeFactors.clear();
-	carnivoreGeneIncrementFactors.clear();
+	plantStatistics.clear();
+	herbivoreStatistics.clear();
+	carnivoreStatistics.clear();
 
 
 	Position p;
@@ -502,51 +483,24 @@ void GridWorld::draw() const
 					if (cell.hasPlant()) {
 						quadAttributes.push_back({{qx, qy}, {0.0f, 1.0f, 0.0f}});
 						//quadAttributes.push_back({{qx, qy}, color});
-						plantEnergies.push_back(cell.plant()->energy);
-						plantReproductionEnergies.push_back(cell.plant()->reproductionEnergy);
-						plantOffspringEnergies.push_back(cell.plant()->offspringEnergy);
-						plantGeneDecrementFactors.push_back(cell.plant()->geneDecrementFactor);
-						plantGeneStabilizeFactors.push_back(cell.plant()->geneStabilizeFactor);
-						plantGeneIncrementFactors.push_back(cell.plant()->geneIncrementFactor);
+						plantStatistics.record(*cell.plant());
 
 						if (cell.hasHerbivore()) {
 							quadAttributes.push_back({{qx, qy}, {0.0f, 0.1f, 1.0f}});
-							herbivoreEnergies.push_back(cell.herbivore()->energy);
-							herbivoreReproductionEnergies.push_back(cell.herbivore()->reproductionEnergy);
-							herbivoreOffspringEnergies.push_back(cell.herbivore()->offspringEnergy);
-							herbivoreGeneDecrementFactors.push_back(cell.herbivore()->geneDecrementFactor);
-							herbivoreGeneStabilizeFactors.push_back(cell.herbivore()->geneStabilizeFactor);
-							herbivoreGeneIncrementFactors.push_back(cell.herbivore()->geneIncrementFactor);
-							herbivoreFeastSizes.push_back(cell.herbivore()->feastSize);
+							herbivoreStatistics.record(*cell.herbivore());
 						}
 						if (cell.hasCarnivore()) {
 							quadAttributes.push_back({{qx, qy}, {1.0f, 0.1f, 0.0f}});
-							carnivoreEnergies.push_back(cell.carnivore()->energy);
-							carnivoreReproductionEnergies.push_back(cell.carnivore()->reproductionEnergy);
-							carnivoreOffspringEnergies.push_back(cell.carnivore()->offspringEnergy);
-							carnivoreGeneDecrementFactors.push_back(cell.carnivore()->geneDecrementFactor);
-							carnivoreGeneStabilizeFactors.push_back(cell.carnivore()->geneIncrementFactor);
-							carnivoreGeneIncrementFactors.push_back(cell.carnivore()->geneStabilizeFactor);
+							carnivoreStatistics.record(*cell.carnivore());
 						}
 					} else {
 						if (cell.hasHerbivore()) {
 							quadAttributes.push_back({{qx, qy}, {0.0f, 0.0f, 1.0f}});
-							herbivoreEnergies.push_back(cell.herbivore()->energy);
-							herbivoreReproductionEnergies.push_back(cell.herbivore()->reproductionEnergy);
-							herbivoreOffspringEnergies.push_back(cell.herbivore()->offspringEnergy);
-							herbivoreGeneDecrementFactors.push_back(cell.herbivore()->geneDecrementFactor);
-							herbivoreGeneStabilizeFactors.push_back(cell.herbivore()->geneStabilizeFactor);
-							herbivoreGeneIncrementFactors.push_back(cell.herbivore()->geneIncrementFactor);
-							herbivoreFeastSizes.push_back(cell.herbivore()->feastSize);
+							herbivoreStatistics.record(*cell.herbivore());
 						}
 						if (cell.hasCarnivore()) {
 							quadAttributes.push_back({{qx, qy}, {1.0f, 0.0f, 0.0f}});
-							carnivoreEnergies.push_back(cell.carnivore()->energy);
-							carnivoreReproductionEnergies.push_back(cell.carnivore()->reproductionEnergy);
-							carnivoreOffspringEnergies.push_back(cell.carnivore()->offspringEnergy);
-							carnivoreGeneDecrementFactors.push_back(cell.carnivore()->geneDecrementFactor);
-							carnivoreGeneStabilizeFactors.push_back(cell.carnivore()->geneIncrementFactor);
-							carnivoreGeneIncrementFactors.push_back(cell.carnivore()->geneStabilizeFactor);
+							carnivoreStatistics.record(*cell.carnivore());
 						}
 					}
 					/*if (cell.accident()) {
@@ -563,65 +517,17 @@ void GridWorld::draw() const
 
 	std::cout << std::endl;
 
-	std::string plantEnergy = "-";
-	std::string plantReproduction = "-";
-	std::string plantOffspring = "-";
-	std::string plantGeneDecrementFactor = "-";
-	std::string plantGeneStabilizeFactor = "-";
-	std::string plantGeneIncrementFactor = "-";
-
-	std::string herbivoreEnergy = "-";
-	std::string herbivoreReproduction = "-";
-	std::string herbivoreOffspring = "-";
-	std::string herbivoreGeneDecrementFactor = "-";
-	std::string herbivoreGeneStabilizeFactor = "-";
-	std::string herbivoreGeneIncrementFactor = "-";
-	std::string herbivoreFeastSize = "-";
-
-	std::string carnivoreEnergy = "-";
-	std::string carnivoreReproduction = "-";
-	std::string carnivoreOffspring = "-";
-	std::string carnivoreGeneDecrementFactor = "-";
-	std::string carnivoreGeneStabilizeFactor = "-";
-	std::string carnivoreGeneIncrementFactor = "-";
-
-	if (!plantEnergies.empty()) {
-		plantEnergy = medianElement(plantEnergies);
-		plantReproduction = medianElement(plantReproductionEnergies);
-		plantOffspring = medianElement(plantOffspringEnergies);
-		plantGeneDecrementFactor = medianElement(plantGeneDecrementFactors);
-		plantGeneStabilizeFactor = medianElement(plantGeneStabilizeFactors);
-		plantGeneIncrementFactor = medianElement(plantGeneIncrementFactors);
-	}
-	if (!herbivoreEnergies.empty()) {
-		herbivoreEnergy = medianElement(herbivoreEnergies);
-		herbivoreReproduction = medianElement(herbivoreReproductionEnergies);
-		herbivoreOffspring = medianElement(herbivoreOffspringEnergies);
-		herbivoreGeneDecrementFactor = medianElement(herbivoreGeneDecrementFactors);
-		herbivoreGeneStabilizeFactor = medianElement(herbivoreGeneStabilizeFactors);
-		herbivoreGeneIncrementFactor = medianElement(herbivoreGeneIncrementFactors);
-		herbivoreFeastSize = medianElement(herbivoreFeastSizes);
-	}
-	if (!carnivoreEnergies.empty()) {
-		carnivoreEnergy = medianElement(carnivoreEnergies);
-		carnivoreReproduction = medianElement(carnivoreReproductionEnergies);
-		carnivoreOffspring = medianElement(carnivoreOffspringEnergies);
-		carnivoreGeneDecrementFactor = medianElement(carnivoreGeneDecrementFactors);
-		carnivoreGeneStabilizeFactor = medianElement(carnivoreGeneStabilizeFactors);
-		carnivoreGeneIncrementFactor = medianElement(carnivoreGeneIncrementFactors);
-	}
-
 	{
 		using namespace std;
 		cout << "      plant herbi carni" << endl;
-		cout << "count" << setw(6)<<right << plantEnergies.size() << setw(6)<<right << herbivoreEnergies.size() << setw(6)<<right << carnivoreEnergies.size() << endl;
-		cout << "energ" << setw(6)<<right << plantEnergy << setw(6)<<right << herbivoreEnergy << setw(6)<<right << carnivoreEnergy << endl;
-		cout << "repro" << setw(6)<<right << plantReproduction << setw(6)<<right << herbivoreReproduction << setw(6)<<right << carnivoreReproduction <<  std::endl;
-		cout << "offsp" << setw(6)<<right << plantOffspring << setw(6)<<right << herbivoreOffspring << setw(6)<<right << carnivoreOffspring << std::endl;
-		cout << "decre" << setw(6)<<right << plantGeneDecrementFactor << setw(6)<<right << herbivoreGeneDecrementFactor << setw(6)<<right << carnivoreGeneDecrementFactor << std::endl;
-		cout << "stabi" << setw(6)<<right << plantGeneStabilizeFactor << setw(6)<<right << herbivoreGeneStabilizeFactor << setw(6)<<right << carnivoreGeneStabilizeFactor << std::endl;
-		cout << "incre" << setw(6)<<right << plantGeneIncrementFactor << setw(6)<<right << herbivoreGeneIncrementFactor << setw(6)<<right << carnivoreGeneIncrementFactor << std::endl;
-		cout << "feast" << setw(6)<<right << "-" << setw(6)<<right << herbivoreFeastSize << setw(6)<<right << "-" << endl;
+		cout << "count" << setw(6)<<right << plantStatistics.energies.size() << setw(6)<<right << herbivoreStatistics.energies.size() << setw(6)<<right << carnivoreStatistics.energies.size() << endl;
+		cout << "energ" << setw(6)<<right << plantEnergy() << setw(6)<<right << herbivoreEnergy() << setw(6)<<right << carnivoreEnergy() << endl;
+		cout << "repro" << setw(6)<<right << plantReproduction() << setw(6)<<right << herbivoreReproduction() << setw(6)<<right << carnivoreReproduction() <<  std::endl;
+		cout << "offsp" << setw(6)<<right << plantOffspring() << setw(6)<<right << herbivoreOffspring() << setw(6)<<right << carnivoreOffspring() << std::endl;
+		cout << "decre" << setw(6)<<right << plantGeneDecrementFactor() << setw(6)<<right << herbivoreGeneDecrementFactor() << setw(6)<<right << carnivoreGeneDecrementFactor() << std::endl;
+		cout << "stabi" << setw(6)<<right << plantGeneStabilizeFactor() << setw(6)<<right << herbivoreGeneStabilizeFactor() << setw(6)<<right << carnivoreGeneStabilizeFactor() << std::endl;
+		cout << "incre" << setw(6)<<right << plantGeneIncrementFactor() << setw(6)<<right << herbivoreGeneIncrementFactor() << setw(6)<<right << carnivoreGeneIncrementFactor() << std::endl;
+		cout << "feast" << setw(6)<<right << "-" << setw(6)<<right << herbivoreFeastSize() << setw(6)<<right << "-" << endl;
 		cout << endl;
 	}
 
@@ -676,10 +582,16 @@ Position GridWorld::wraparound(Position position)
 	return position;
 }
 
-std::string GridWorld::medianElement(std::vector<int> &vector) const
+std::string GridWorld::medianElement(std::vector<int>& v, std::string empty)
 {
-	std::nth_element(vector.begin(), vector.begin() + vector.size()/2, vector.end());
-	return std::to_string(vector[vector.size()/2]);
+	if (v.empty()) {
+		return empty;
+	} else {
+		// NOTE: fuck evens
+		int i = v.size()/2;
+		std::nth_element(v.begin(), v.begin() + i, v.end());
+		return std::to_string(v[i]);
+	}
 }
 
 int GridWorld::randomOffset(int decrementFactor, int stabilizeFactor, int incrementFactor) const
