@@ -80,26 +80,26 @@ public:
 		return at(p.row, p.col);
 	}
 
-	template <size_type R>
-	MooreNeighborhood<value_type, 2*R+1> mooreNeighborhoodAt(int rowIndex, int colIndex)
+	template <size_type Radius>
+	MooreNeighborhood<value_type, 2*Radius+1> mooreNeighborhoodAt(int rowIndex, int colIndex)
 	{
 		assert(rowIndex < mRowCount && colIndex < mColumnCount);
-		MooreNeighborhood<value_type, 2*R+1> result;
-		if (needWraparound(rowIndex, colIndex, R)) {
-			for (int r = 0 ; r < (2*R+1); ++r) {
-				int row = rowIndex - (R - r);
+		MooreNeighborhood<value_type, 2*Radius+1> result;
+		if (needWraparound(rowIndex, colIndex, Radius)) {
+			for (int r = 0 ; r < (2*Radius+1); ++r) {
+				int row = rowIndex - (Radius - r);
 				row = wraparoundRow(row);
-				for (int c = 0 ; c < (2*R+1); ++c) {
-					int col = colIndex - (R - c);
+				for (int c = 0 ; c < (2*Radius+1); ++c) {
+					int col = colIndex - (Radius - c);
 					col = wraparoundColumn(col);
 					result[r][c] = at(row, col);
 				}
 			}
 		} else {
-			for (int r = 0 ; r < (2*R+1); ++r) {
-				int row = rowIndex - (R - r);
-				for (int c = 0 ; c < (2*R+1); ++c) {
-					int col = colIndex - (R - c);
+			for (int r = 0 ; r < (2*Radius+1); ++r) {
+				int row = rowIndex - (Radius - r);
+				for (int c = 0 ; c < (2*Radius+1); ++c) {
+					int col = colIndex - (Radius - c);
 					result[r][c] = at(row, col);
 				}
 			}
@@ -107,10 +107,10 @@ public:
 		return result;
 	}
 
-	template <size_type R>
-	MooreNeighborhood<value_type, 2*R+1> mooreNeighborhoodAt(Position p)
+	template <size_type Radius>
+	MooreNeighborhood<value_type, 2*Radius+1> mooreNeighborhoodAt(Position p)
 	{
-		return mooreNeighborhoodAt<R>(p.row, p.col);
+		return mooreNeighborhoodAt<Radius>(p.row, p.col);
 	}
 
 	size_type size() const noexcept
