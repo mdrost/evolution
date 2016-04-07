@@ -18,5 +18,6 @@ ProbabilityGenerator.h
 Restorer.h
 Shader.h
 Simulation.h
+sort.sh
 Vector.h
 VertexArrayObject.h
