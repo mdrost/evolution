@@ -10,7 +10,7 @@ public:
 
 	virtual void update() = 0;
 
-	virtual void draw() const = 0;
+	virtual void render() const = 0;
 };
 
 #endif // SIMULATION_H

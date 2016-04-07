@@ -19,7 +19,7 @@ private:
 
 	void update();
 
-	void display();
+	void render();
 
 	void cleanup();
 

@@ -12,11 +12,14 @@ set(SRC_LIST
 	Buffer.h
 	GridWorld.cpp
 	GridWorld.h
+	GridWorldRenderer.cpp
+	GridWorldRenderer.h
 	ModuloIntDistribution.h
 	Position.h
+	ProbabilityGenerator.h
 	Restorer.h
-	Shader.h
 	Simulation.h
+	Shader.h
 	VertexArrayObject.h
 )
 add_executable(evolution ${SRC_LIST})

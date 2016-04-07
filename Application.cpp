@@ -17,7 +17,7 @@ void Application::run()
 	Uint64 time = SDL_GetPerformanceCounter();
 
 	// Display first frame
-	display();
+	render();
 
 	while (running) {
 		frameCounter += 1;
@@ -34,7 +34,7 @@ void Application::run()
 		time = SDL_GetPerformanceCounter();
 
 		std::cout << "updates: " << u << std::endl;
-		display();
+		render();
 	}
 
 	cleanup();
@@ -100,11 +100,11 @@ void Application::update()
 	world.update();
 }
 
-void Application::display()
+void Application::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	world.draw();
+	world.render();
 
 	SDL_GL_SwapWindow(window);
 }

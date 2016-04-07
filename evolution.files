@@ -9,9 +9,12 @@ cmake_modules/FindSDL2.cmake
 .gitignore
 GridWorld.cpp
 GridWorld.h
+GridWorldRenderer.cpp
+GridWorldRenderer.h
 main.cpp
 ModuloIntDistribution.h
 Position.h
+ProbabilityGenerator.h
 Restorer.h
 Shader.h
 Simulation.h
