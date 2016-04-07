@@ -85,13 +85,23 @@ public:
 	{
 		assert(rowIndex < mRowCount && colIndex < mColumnCount);
 		MooreNeighborhood<value_type, 2*R+1> result;
-		for (int r = 0 ; r < (2*R+1); ++r) {
-			int row = rowIndex - (R - r);
-			row = wraparoundRow(row);
-			for (int c = 0 ; c < (2*R+1); ++c) {
-				int col = colIndex - (R - c);
-				col = wraparoundColumn(col);
-				result[r][c] = at(row, col);
+		if (needWraparound(rowIndex, colIndex, R)) {
+			for (int r = 0 ; r < (2*R+1); ++r) {
+				int row = rowIndex - (R - r);
+				row = wraparoundRow(row);
+				for (int c = 0 ; c < (2*R+1); ++c) {
+					int col = colIndex - (R - c);
+					col = wraparoundColumn(col);
+					result[r][c] = at(row, col);
+				}
+			}
+		} else {
+			for (int r = 0 ; r < (2*R+1); ++r) {
+				int row = rowIndex - (R - r);
+				for (int c = 0 ; c < (2*R+1); ++c) {
+					int col = colIndex - (R - c);
+					result[r][c] = at(row, col);
+				}
 			}
 		}
 		return result;
@@ -109,6 +119,14 @@ public:
 	}
 
 private:
+
+	bool needWraparound(int rowIndex, int colIndex, int radius) const noexcept
+	{
+		return (rowIndex < radius)
+		|| (colIndex < radius)
+		|| (rowIndex >= (mRowCount - radius))
+		|| (colIndex >= (mColumnCount - radius));
+	}
 
 	int wraparound(int index, int dimensionSize) const noexcept
 	{
