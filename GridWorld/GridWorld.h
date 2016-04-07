@@ -1,11 +1,12 @@
 #ifndef GRIDWORLD_H
 #define GRIDWORLD_H
 
-#include "BlockMap.h"
-#include "ModuloIntDistribution.h"
-#include "Position.h"
-#include "Simulation.h"
 #include "GridWorldRenderer.h"
+
+#include "../BlockMap.h"
+#include "../ModuloIntDistribution.h"
+#include "../Position.h"
+#include "../Simulation.h"
 
 #include <vector>
 #include <set>

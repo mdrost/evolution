@@ -1,10 +1,11 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "Buffer.h"
 #include "Cell.h"
-#include "Shader.h"
-#include "VertexArrayObject.h"
+
+#include "../Buffer.h"
+#include "../Shader.h"
+#include "../VertexArrayObject.h"
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>

@@ -1,8 +1,9 @@
 #include "GridWorldRenderer.h"
 
-#include "Position.h"
-#include "Restorer.h"
 #include "GridWorld.h"
+
+#include "../Position.h"
+#include "../Restorer.h"
 
 #include <cstddef>
 

@@ -1,6 +1,6 @@
 #include "GridWorld.h"
 
-#include "Restorer.h"
+#include "../Restorer.h"
 
 #include <cmath>
 #include <random>

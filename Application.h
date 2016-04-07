@@ -1,7 +1,8 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include "GridWorld.h"
+#include "GameOfLife/GameOfLifeWorld.h"
+#include "GridWorld/GridWorld.h"
 
 #include <SDL2/SDL.h>
 
@@ -25,6 +26,7 @@ private:
 
 private:
 	GridWorld world;
+	//GameOfLife::GameOfLifeWorld world;
 
 	bool running;
 	int frameCounter;

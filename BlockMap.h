@@ -1,7 +1,6 @@
 #ifndef BLOCKMAP_H
 #define BLOCKMAP_H
 
-#include "Cell.h"
 #include "Position.h"
 
 #include <cassert>

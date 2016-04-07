@@ -10,10 +10,17 @@ set(SRC_LIST
 	BlockMap.h
 	BlockMap.cpp
 	Buffer.h
-	GridWorld.cpp
-	GridWorld.h
-	GridWorldRenderer.cpp
-	GridWorldRenderer.h
+	GameOfLife/Cell.h
+	GameOfLife/GameOfLifeWorld.cpp
+	GameOfLife/GameOfLifeWorld.h
+	GameOfLife/GameOfLifeWorldRenderer.cpp
+	GameOfLife/GameOfLifeWorldRenderer.h
+	Grid.h
+	GridWorld/Cell.h
+	GridWorld/GridWorld.cpp
+	GridWorld/GridWorld.h
+	GridWorld/GridWorldRenderer.cpp
+	GridWorld/GridWorldRenderer.h
 	ModuloIntDistribution.h
 	Position.h
 	ProbabilityGenerator.h
