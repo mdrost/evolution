@@ -85,7 +85,7 @@ public:
 	{
 		assert(rowIndex < mRowCount && colIndex < mColumnCount);
 		MooreNeighborhood<value_type, 2*Radius+1> result;
-		if (needWraparound(rowIndex, colIndex, Radius)) {
+		if (__builtin_expect(needWraparound(rowIndex, colIndex, Radius), 0)) {
 			for (int r = 0 ; r < (2*Radius+1); ++r) {
 				int row = rowIndex - (Radius - r);
 				row = wraparoundRow(row);
