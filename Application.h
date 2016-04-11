@@ -3,6 +3,7 @@
 
 #include "GameOfLife/GameOfLifeWorld.h"
 #include "GridWorld/GridWorld.h"
+#include "PlantWorld/PlantWorld.h"
 
 #include <SDL2/SDL.h>
 
@@ -27,6 +28,7 @@ private:
 private:
 	GridWorld world;
 	//GameOfLife::GameOfLifeWorld world;
+	//PlantWorld::PlantWorld world;
 
 	bool running;
 	int frameCounter;

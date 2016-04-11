@@ -22,7 +22,13 @@ set(SRC_LIST
 	GridWorld/GridWorldRenderer.cpp
 	GridWorld/GridWorldRenderer.h
 	ModuloIntDistribution.h
+	PlantWorld/Cell.h
+	PlantWorld/PlantWorld.cpp
+	PlantWorld/PlantWorld.h
+	PlantWorld/PlantWorldRenderer.cpp
+	PlantWorld/PlantWorldRenderer.h
 	Position.h
+	PositionOffset.h
 	ProbabilityGenerator.h
 	Restorer.h
 	Simulation.h

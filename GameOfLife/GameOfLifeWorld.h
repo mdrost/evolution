@@ -10,6 +10,7 @@
 
 #include "GameOfLifeWorldRenderer.h"
 
+#include <memory>
 #include <random>
 
 namespace GameOfLife {
@@ -43,8 +44,8 @@ private:
 	mutable ModuloIntDistribution<> rowDistribution;
 	mutable ModuloIntDistribution<> columnDistribution;
 
-	Grid<Cell> *currentGrid;
-	Grid<Cell> *updateGrid;
+	std::unique_ptr<Grid<Cell>> currentGrid;
+	std::unique_ptr<Grid<Cell>> updateGrid;
 
 	friend class GameOfLifeWorldRenderer;
 	GameOfLifeWorldRenderer renderer;

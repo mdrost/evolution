@@ -16,4 +16,14 @@ public:
 	int col;
 };
 
+inline bool operator==(const Position& a, const Position& b)
+{
+	return a.row == b.row && a.col == b.col;
+}
+
+inline bool operator!=(const Position& a, const Position& b)
+{
+	return a.row != b.row || a.col != b.col;
+}
+
 #endif // POSITION_H

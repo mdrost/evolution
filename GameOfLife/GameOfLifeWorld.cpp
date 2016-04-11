@@ -9,9 +9,12 @@ GameOfLifeWorld::GameOfLifeWorld()
 	, randomToggleCellCount(1)
 	, rowDistribution(0, columnCount - 1)
 	, columnDistribution(0, rowCount - 1)
-	, currentGrid(new Grid<Cell>(rowCount, columnCount))
-	, updateGrid(new Grid<Cell>(rowCount, columnCount))
+	, currentGrid(std::make_unique<Grid<Cell>>(rowCount, columnCount))
+	, updateGrid(std::make_unique<Grid<Cell>>(rowCount, columnCount))
 {
+	std::random_device rd;
+	int seed = rd();
+	random.seed(seed);
 }
 
 bool GameOfLifeWorld::initialize()
@@ -31,7 +34,7 @@ void GameOfLifeWorld::update()
 		for (int c = 0; c < columnCount; ++c) {
 			Position p(r, c);
 			Cell cell = currentGrid->at(p);
-			auto cells = currentGrid->mooreNeighborhoodAt<1>(p);
+			MooreNeighborhood<Cell, 1> cells = currentGrid->mooreNeighborhoodAt<1>(p);
 			int livingCellCount =
 				cells[0][0] + cells[0][1] + cells[0][2] +
 				cells[1][0]        +        cells[1][2] +

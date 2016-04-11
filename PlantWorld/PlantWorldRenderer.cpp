@@ -1,16 +1,19 @@
-#include "GameOfLifeWorldRenderer.h"
+#include "PlantWorldRenderer.h"
 
-#include "GameOfLifeWorld.h"
+#include "PlantWorld.h"
 
+#include <algorithm>
 #include <cstddef>
 
-namespace GameOfLife {
+#include <iostream>
 
-GameOfLifeWorldRenderer::GameOfLifeWorldRenderer()
+namespace PlantWorld {
+
+PlantWorldRenderer::PlantWorldRenderer()
 {
 }
 
-void GameOfLifeWorldRenderer::initialize()
+void PlantWorldRenderer::initialize()
 {
 	initializeShaders();
 
@@ -46,7 +49,7 @@ void GameOfLifeWorldRenderer::initialize()
 	quadVertexArrayObject.unbind();
 }
 
-void GameOfLifeWorldRenderer::initializeShaders()
+void PlantWorldRenderer::initializeShaders()
 {
 	VertexShader vertexShader(
 		"#version 330 core\n"
@@ -73,21 +76,44 @@ void GameOfLifeWorldRenderer::initializeShaders()
 	program = ShaderProgram(vertexShader, fragmentShader);
 }
 
-void GameOfLifeWorldRenderer::render(const GameOfLifeWorld& world) const
+void PlantWorldRenderer::render(const PlantWorld& world) const
 {
 	quads.clear();
+	energies.clear();
+	ages.clear();
+	sizes.clear();
+	maxSizes.clear();
 
 	const Grid<Cell>* grid = world.currentGrid.get();
 	int rowCount = world.rowCount;
 	int columnCount = world.columnCount;
+
+	for (int r = 0; r < rowCount; ++ r) {
+		for (int c = 0; c < columnCount; ++c) {
+			const Cell& cell = grid->at(r, c);
+			if (cell.hasPlant) {
+				energies.push_back(cell.plant.energy);
+				ages.push_back(cell.plant.age);
+				sizes.push_back(cell.plant.size);
+				maxSizes.push_back(cell.plant.maxSize);
+			}
+		}
+	}
+
+	int medianAge;
+	if (!ages.empty()) {
+		int i = ages.size()/2;
+		std::nth_element(ages.begin(), ages.begin() + i, ages.end());
+		medianAge = ages[i];
+	}
+
 	for (int r = 0; r < rowCount; ++ r) {
 		GLfloat y = 0.95f - GLfloat(1.90 * r) / rowCount;
 		for (int c = 0; c < columnCount; ++c) {
 			GLfloat x = 0.95f - GLfloat(1.90 * c) / columnCount;
-			if (grid->at(r, c)) {
-				quads.push_back({{x, y}, {0.0f, 1.0f, 0.0f}});
-			} else {
-				quads.push_back({{x, y}, {0.5f, 0.0f, 0.0f}});
+			const Cell& cell = grid->at(r, c);
+			if (cell.hasPlant) {
+				quads.push_back({{x, y}, {std::min((cell.plant.age - medianAge + 128) / 256.0f, 1.0f), 1.0f, 0.0f}});
 			}
 		}
 	}
@@ -97,7 +123,23 @@ void GameOfLifeWorldRenderer::render(const GameOfLifeWorld& world) const
 	instanceVertexBufferObject.setData(quads, GL_DYNAMIC_DRAW);
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 6, quads.size());
 	quadVertexArrayObject.unbind();
+
+	std::cout << "energy:   " << medianElement(energies) << std::endl;
+	std::cout << "age:      " << medianElement(ages) << std::endl;
+	std::cout << "sizes:    " << medianElement(sizes) << std::endl;
+	std::cout << "maxSizes: " << medianElement(maxSizes) << std::endl;
 }
 
-} // namespace GameOfLife
+std::string PlantWorldRenderer::medianElement(std::vector<int>& v, std::string empty) const
+{
+	if (v.empty()) {
+		return empty;
+	} else {
+		// NOTE: fuck evens
+		int i = v.size()/2;
+		std::nth_element(v.begin(), v.begin() + i, v.end());
+		return std::to_string(v[i]);
+	}
+}
 
+} // namespace PlantWorld

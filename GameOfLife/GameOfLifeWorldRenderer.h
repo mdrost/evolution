@@ -1,8 +1,6 @@
 #ifndef GAMEOFLIFEWORLDRENDERER_H
 #define GAMEOFLIFEWORLDRENDERER_H
 
-#include "Cell.h"
-
 #include "../Buffer.h"
 #include "../Shader.h"
 #include "../VertexArrayObject.h"

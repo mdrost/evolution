@@ -7,8 +7,8 @@
 #include <cassert>
 #include <vector>
 
-template <class T, int N>
-using MooreNeighborhood = std::array<std::array<T, N>, N>;
+template <class T, int Radius>
+using MooreNeighborhood = std::array<std::array<T, 2*Radius+1>, 2*Radius+1>;
 
 template <class T>
 class Grid
@@ -81,13 +81,13 @@ public:
 	}
 
 	template <size_type Radius>
-	MooreNeighborhood<value_type, 2*Radius+1> mooreNeighborhoodAt(int rowIndex, int colIndex)
+	MooreNeighborhood<value_type, Radius> mooreNeighborhoodAt(int rowIndex, int colIndex)
 	{
 		assert(rowIndex < mRowCount && colIndex < mColumnCount);
 		if (__builtin_expect(needWraparound<Radius>(rowIndex, colIndex), 0)) {
 			return mooreNeighborhoodWraparoundedAt<Radius>(rowIndex, colIndex);
 		}
-		MooreNeighborhood<value_type, 2*Radius+1> result;
+		MooreNeighborhood<value_type, Radius> result;
 		for (int r = 0 ; r < (2*Radius+1); ++r) {
 			int row = rowIndex - (Radius - r);
 			for (int c = 0 ; c < (2*Radius+1); ++c) {
@@ -99,7 +99,7 @@ public:
 	}
 
 	template <size_type Radius>
-	MooreNeighborhood<value_type, 2*Radius+1> mooreNeighborhoodAt(Position p)
+	MooreNeighborhood<value_type, Radius> mooreNeighborhoodAt(Position p)
 	{
 		return mooreNeighborhoodAt<Radius>(p.row, p.col);
 	}
@@ -112,10 +112,10 @@ public:
 private:
 
 	template <size_type Radius>
-	MooreNeighborhood<value_type, 2*Radius+1> mooreNeighborhoodWraparoundedAt(int rowIndex, int colIndex)
+	MooreNeighborhood<value_type, Radius> mooreNeighborhoodWraparoundedAt(int rowIndex, int colIndex)
 	{
 		assert(rowIndex < mRowCount && colIndex < mColumnCount);
-		MooreNeighborhood<value_type, 2*Radius+1> result;
+		MooreNeighborhood<value_type, Radius> result;
 		for (int r = 0 ; r < (2*Radius+1); ++r) {
 			int row = rowIndex - (Radius - r);
 			row = wraparoundRow(row);

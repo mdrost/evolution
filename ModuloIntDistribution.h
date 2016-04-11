@@ -2,6 +2,7 @@
 #define MODULOINTDISTRIBUTION_H
 
 #include <limits>
+#include <type_traits>
 
 template <class IntType = int>
 class ModuloIntDistribution
