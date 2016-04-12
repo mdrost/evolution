@@ -89,6 +89,11 @@ private:
 
 	int randomOffset(int decrementFactor, int stabilizeFactor, int incrementFactor) const;
 
+	int randomOffset() const
+	{
+		return randomOffset(1, 1, 1);
+	}
+
 private:
 	mutable std::minstd_rand0 random; // NOTE: fastest from std
 

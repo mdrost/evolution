@@ -389,9 +389,9 @@ Plant GridWorld::reproduce(Plant &parent)
 	child.energy = parent.offspringEnergy;
 	child.reproductionEnergy = std::max(parent.reproductionEnergy + randomOffset(parent), 1);
 	child.offspringEnergy = std::max(parent.offspringEnergy + randomOffset(parent), 1);
-	child.geneDecrementFactor = std::max(parent.geneDecrementFactor + randomOffset(parent), 1);
-	child.geneStabilizeFactor = std::max(parent.geneStabilizeFactor + randomOffset(parent), 1);
-	child.geneIncrementFactor = std::max(parent.geneIncrementFactor + randomOffset(parent), 1);
+	child.geneDecrementFactor = std::max(parent.geneDecrementFactor + randomOffset(), 1);
+	child.geneStabilizeFactor = std::max(parent.geneStabilizeFactor + randomOffset(), 1);
+	child.geneIncrementFactor = std::max(parent.geneIncrementFactor + randomOffset(), 1);
 
 	parent.energy -= (parent.offspringEnergy * 1.5);
 
@@ -404,9 +404,9 @@ Herbivore GridWorld::reproduce(Herbivore &parent)
 	child.energy = parent.offspringEnergy;
 	child.reproductionEnergy = std::max(parent.reproductionEnergy + randomOffset(parent), 1);
 	child.offspringEnergy = std::max(parent.offspringEnergy + randomOffset(parent), 1);
-	child.geneDecrementFactor = std::max(parent.geneDecrementFactor + randomOffset(parent), 1);
-	child.geneStabilizeFactor = std::max(parent.geneStabilizeFactor + randomOffset(parent), 1);
-	child.geneIncrementFactor = std::max(parent.geneIncrementFactor + randomOffset(parent), 1);
+	child.geneDecrementFactor = std::max(parent.geneDecrementFactor + randomOffset(), 1);
+	child.geneStabilizeFactor = std::max(parent.geneStabilizeFactor + randomOffset(), 1);
+	child.geneIncrementFactor = std::max(parent.geneIncrementFactor + randomOffset(), 1);
 	child.feastSize = std::max(parent.feastSize + randomOffset(parent), 0);
 
 	parent.energy -= (parent.offspringEnergy * 1.5);
@@ -420,9 +420,9 @@ Carnivore GridWorld::reproduce(Carnivore &parent)
 	child.energy = parent.offspringEnergy;
 	child.reproductionEnergy = std::max(parent.reproductionEnergy + randomOffset(parent), 1);
 	child.offspringEnergy = std::max(parent.offspringEnergy + randomOffset(parent), 1);
-	child.geneDecrementFactor = std::max(parent.geneDecrementFactor + randomOffset(parent), 1);
-	child.geneStabilizeFactor = std::max(parent.geneStabilizeFactor + randomOffset(parent), 1);
-	child.geneIncrementFactor = std::max(parent.geneIncrementFactor + randomOffset(parent), 1);
+	child.geneDecrementFactor = std::max(parent.geneDecrementFactor + randomOffset(), 1);
+	child.geneStabilizeFactor = std::max(parent.geneStabilizeFactor + randomOffset(), 1);
+	child.geneIncrementFactor = std::max(parent.geneIncrementFactor + randomOffset(), 1);
 
 	parent.energy -= (parent.offspringEnergy * 1.5);
 
