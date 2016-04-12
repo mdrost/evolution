@@ -317,10 +317,6 @@ void GridWorld::peripheralBlockCarnivoreUpdate(Block<Cell> &block, Position loca
 			nearbyCell->setCarnivore(reproduce(*carnivore));
 		}
 	} else {
-		if (!nearbyCell->hasHerbivore()) {
-			nearbyGlobalPosition = randomNearbyWraparoundedPosition(globalPosition);
-			nearbyCell = &cellBlocks.cell(nearbyGlobalPosition);
-		}
 		if (!nearbyCell->hasCarnivore()) {
 			if (nearbyCell->hasHerbivore()) {
 				carnivore->energy += (nearbyCell->herbivore()->energy * 2/3);
@@ -348,10 +344,6 @@ void GridWorld::innerBlockCarnivoreUpdate(Block<Cell> &block, Position localPosi
 			nearbyCell->setCarnivore(reproduce(*carnivore));
 		}
 	} else {
-		if (!nearbyCell->hasHerbivore()) {
-			nearbyLocalPosition = randomNearbyWraparoundedPosition(globalPosition);
-			nearbyCell = &block.cell(nearbyLocalPosition);
-		}
 		if (!nearbyCell->hasCarnivore()) {
 			if (nearbyCell->hasHerbivore()) {
 				carnivore->energy += (nearbyCell->herbivore()->energy * 2/3);
